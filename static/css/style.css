@@ -1,0 +1,138 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fc;
+}
+
+/* Navbar */
+.navbar{
+    background:linear-gradient(90deg,#0f172a,#1e3a8a);
+}
+
+.navbar-brand{
+    font-size:24px;
+    font-weight:600;
+}
+
+/* Dashboard Cards */
+
+.dashboard-card{
+    border:none;
+    border-radius:18px;
+    transition:.3s;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.dashboard-card:hover{
+    transform:translateY(-6px);
+}
+
+.dashboard-card h6{
+    font-size:15px;
+    opacity:.9;
+}
+
+.dashboard-card h2{
+    margin-top:8px;
+    font-weight:700;
+}
+
+/* Cards */
+
+.card{
+    border:none;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.card-header{
+    border-radius:18px 18px 0 0 !important;
+    background:linear-gradient(90deg,#0f172a,#2563eb)!important;
+}
+
+/* Form */
+
+.form-control,
+.form-select{
+    border-radius:12px;
+    padding:12px;
+}
+
+.form-control:focus,
+.form-select:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 8px rgba(37,99,235,.25);
+}
+
+/* Button */
+
+.btn-primary{
+    border-radius:12px;
+    padding:12px;
+    font-weight:600;
+}
+
+.btn-primary:hover{
+    transform:scale(1.01);
+}
+
+/* Table */
+
+.table{
+    margin-bottom:0;
+}
+
+.table thead{
+    background:#0f172a;
+}
+
+.table td{
+    vertical-align:middle;
+}
+
+/* Badges */
+
+.badge{
+    padding:8px 12px;
+    border-radius:30px;
+    font-size:13px;
+}
+
+/* Resolve Button */
+
+.btn-outline-success,
+.btn-outline-secondary{
+    border-radius:10px;
+}
+
+/* Chart */
+
+canvas{
+    max-height:350px;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.dashboard-card{
+    margin-bottom:15px;
+}
+
+.navbar-brand{
+    font-size:18px;
+}
+
+.card-header h4{
+    font-size:18px;
+}
+
+}
