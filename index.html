@@ -1,164 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Safety Logger</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Incident Logger & Safety Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="container py-4 bg-light">
+<body class="bg-slate-900 text-slate-100 font-sans antialiased min-h-screen pb-12">
 
-    <h1 class="text-center mb-4">Campus Incident Logger</h1>
+  <!-- Top Navigation -->
+  <nav class="bg-slate-800/80 backdrop-blur-md border-b border-slate-700 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-3.5 h-3.5 bg-red-500 rounded-full animate-ping"></div>
+        <span class="font-extrabold text-xl tracking-tight text-white">Campus Safety Logger</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="hidden sm:inline text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full font-medium">System Online</span>
+        <button onclick="sendSOS()" class="bg-red-600 hover:bg-red-700 text-white font-bold text-sm px-4 py-2 rounded-xl shadow-lg transition">🚨 SOS Alert</button>
+      </div>
+    </div>
+  </nav>
 
-    <!-- FORM SECTION -->
-    <div class="card p-4 mb-4 shadow-sm">
-        <h3>Report Incident</h3>
-        <form id="incidentForm">
-            <div class="mb-3">
-                <input type="text" id="title" class="form-control" placeholder="Incident Title" required>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <select id="category" class="form-select" required>
-                        <option value="" disabled selected>Select Category</option>
-                        <option value="Fire">Fire</option>
-                        <option value="Medical">Medical</option>
-                        <option value="Security">Security</option>
-                        <option value="Maintenance">Maintenance</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <select id="priority" class="form-select">
-                        <option value="Low">Low Priority</option>
-                        <option value="Medium" selected>Medium Priority</option>
-                        <option value="High">High Priority</option>
-                    </select>
-                </div>
-            </div>
-            <div class="mb-3">
-                <textarea id="description" class="form-control" placeholder="Description" rows="2"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Submit Report</button>
-        </form>
+  <!-- Main Container -->
+  <main class="max-w-6xl mx-auto px-4 mt-8 space-y-8">
+
+    <!-- Hero Banner -->
+    <div class="bg-gradient-to-r from-slate-800 to-slate-800/80 border border-slate-700/80 rounded-2xl p-6 md:p-8 shadow-xl">
+      <h1 class="text-2xl md:text-4xl font-bold text-white mb-2">Campus Safety & Incident Portal</h1>
+      <p class="text-slate-400 text-sm md:text-base max-w-2xl">
+        Report campus issues, track emergency incident statuses, and trigger immediate safety alerts.
+      </p>
     </div>
 
-    <!-- TABLE SECTION -->
-    <div class="card p-4 mb-4 shadow-sm">
-        <h3>All Reported Incidents</h3>
-        <table class="table table-striped mt-3">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Priority</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="incidentTableBody">
-                <!-- Dynamically populated -->
-            </tbody>
+    <!-- Report Incident Form Card -->
+    <section class="bg-slate-800 border border-slate-700/80 rounded-2xl p-6 shadow-xl">
+      <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+        <span>📝</span> Report Incident
+      </h2>
+      
+      <form class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">Incident Title</label>
+          <input type="text" placeholder="E.g., Fire leakage in Canteen, Broken light near Block B" 
+            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition text-sm" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">Select Category</label>
+            <select class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-blue-500 transition text-sm">
+              <option value="">Choose category...</option>
+              <option value="fire">Fire & Hazard</option>
+              <option value="maintenance">Maintenance</option>
+              <option value="security">Security / Harassment</option>
+              <option value="medical">Medical Emergency</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">Priority</label>
+            <select class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-blue-500 transition text-sm">
+              <option value="low">Low Priority</option>
+              <option value="medium" selected>Medium Priority</option>
+              <option value="high">High Priority</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 uppercase mb-1">Description</label>
+          <textarea rows="3" placeholder="Provide additional details about the incident..." 
+            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition text-sm"></textarea>
+        </div>
+
+        <button type="button" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-blue-600/20 active:scale-[0.99]">
+          Submit Report
+        </button>
+      </form>
+    </section>
+
+    <!-- All Reported Incidents Table -->
+    <section class="bg-slate-800 border border-slate-700/80 rounded-2xl p-6 shadow-xl">
+      <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+        <span>📋</span> All Reported Incidents
+      </h2>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-slate-700 text-slate-400 text-xs uppercase">
+              <th class="py-3 px-4">ID</th>
+              <th class="py-3 px-4">Title</th>
+              <th class="py-3 px-4">Category</th>
+              <th class="py-3 px-4">Priority</th>
+              <th class="py-3 px-4">Status</th>
+              <th class="py-3 px-4 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-700/50">
+            <!-- Row 1 -->
+            <tr class="hover:bg-slate-700/30 transition">
+              <td class="py-4 px-4 font-mono text-slate-400">#2</td>
+              <td class="py-4 px-4 font-semibold text-white">Fire Leakage</td>
+              <td class="py-4 px-4"><span class="bg-red-500/10 text-red-400 border border-red-500/20 text-xs px-2.5 py-1 rounded-md">Fire</span></td>
+              <td class="py-4 px-4"><span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-md">Medium</span></td>
+              <td class="py-4 px-4"><span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs px-2.5 py-1 rounded-md">Open</span></td>
+              <td class="py-4 px-4 text-right">
+                <button class="bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 text-xs font-semibold px-3 py-1.5 rounded-lg transition">Mark Resolved</button>
+              </td>
+            </tr>
+            <!-- Row 2 -->
+            <tr class="hover:bg-slate-700/30 transition">
+              <td class="py-4 px-4 font-mono text-slate-400">#1</td>
+              <td class="py-4 px-4 font-semibold text-white">Canteen Light Maintenance</td>
+              <td class="py-4 px-4"><span class="bg-slate-700 text-slate-300 text-xs px-2.5 py-1 rounded-md">Maintenance</span></td>
+              <td class="py-4 px-4"><span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs px-2.5 py-1 rounded-md">Medium</span></td>
+              <td class="py-4 px-4"><span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs px-2.5 py-1 rounded-md">Open</span></td>
+              <td class="py-4 px-4 text-right">
+                <button class="bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 text-xs font-semibold px-3 py-1.5 rounded-lg transition">Mark Resolved</button>
+              </td>
+            </tr>
+          </tbody>
         </table>
-    </div>
+      </div>
+    </section>
 
-    <!-- CHART SECTION -->
-    <div class="card p-4 shadow-sm">
-        <h3>Incident Trends</h3>
-        <canvas id="trendChart" style="max-height: 300px;"></canvas>
-    </div>
+  </main>
 
-    <script>
-        let chartInstance = null;
-
-        // Load incidents on initial load
-        document.addEventListener('DOMContentLoaded', loadIncidents);
-
-        // Submit new incident
-        document.getElementById('incidentForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const payload = {
-                title: document.getElementById('title').value,
-                category: document.getElementById('category').value,
-                priority: document.getElementById('priority').value,
-                description: document.getElementById('description').value
-            };
-
-            await fetch('/api/incidents', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            document.getElementById('incidentForm').reset();
-            loadIncidents();
+  <script>
+    function sendSOS() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+          alert("🚨 SOS SENT!\nLatitude: " + pos.coords.latitude + "\nLongitude: " + pos.coords.longitude);
         });
-
-        // Load Incidents and render Table + Chart
-        async function loadIncidents() {
-            const res = await fetch('/api/incidents');
-            const data = await res.json();
-
-            // Populate Table
-            const tbody = document.getElementById('incidentTableBody');
-            tbody.innerHTML = '';
-            
-            data.incidents.forEach(item => {
-                const row = `
-                    <tr>
-                        <td>${item.id}</td>
-                        <td><strong>${item.title}</strong><br><small class="text-muted">${item.description || ''}</small></td>
-                        <td><span class="badge bg-secondary">${item.category}</span></td>
-                        <td><span class="badge ${item.priority === 'High' ? 'bg-danger' : item.priority === 'Medium' ? 'bg-warning text-dark' : 'bg-info'}">${item.priority}</span></td>
-                        <td><span class="badge ${item.status === 'Resolved' ? 'bg-success' : 'bg-primary'}">${item.status}</span></td>
-                        <td>
-                            ${item.status === 'Open' 
-                                ? `<button class="btn btn-sm btn-outline-success" onclick="updateStatus(${item.id}, 'Resolved')">Mark Resolved</button>` 
-                                : `<button class="btn btn-sm btn-outline-secondary" onclick="updateStatus(${item.id}, 'Open')">Reopen</button>`
-                            }
-                        </td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
-            });
-
-            // Populate Chart
-            renderChart(data.catData);
-        }
-
-        // Update Incident Status
-        async function updateStatus(id, status) {
-            await fetch('/api/incidents/update', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, status })
-            });
-            loadIncidents();
-        }
-
-        // Render Chart.js Chart
-        function renderChart(catData) {
-            const ctx = document.getElementById('trendChart').getContext('2d');
-            if (chartInstance) {
-                chartInstance.destroy();
-            }
-            chartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(catData),
-                    datasets: [{
-                        label: 'Incidents Count',
-                        data: Object.values(catData),
-                        backgroundColor: '#0d6efd'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-                }
-            });
-        }
-    </script>
+      } else {
+        alert("🚨 SOS Alert Sent!");
+      }
+    }
+  </script>
 </body>
 </html>
+  
